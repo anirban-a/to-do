@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-
-type item = { description: string; done: boolean };
+import { Item } from './item';
 
 @Component({
   selector: 'app-root',
@@ -10,18 +9,18 @@ type item = { description: string; done: boolean };
 export class AppComponent {
   title = 'To do application';
 
-  // filter criteria.. By default setting it to all.
+  // filter criteria.. By default setting it to 'all'.
   filter:
     'all' | 'active' | 'done' = 'all';
 
-  allItems: item[] = [
+  allItems:Item[] = [
     { description: 'eat', done: true },
     { description: 'sleep', done: false },
     { description: 'play', done: false },
     { description: 'laugh', done: false },
   ];
 
-  get items(): item[] {
+  get items():Item[] {
     if (this.filter === 'all') {
       return this.allItems;
     }
@@ -33,5 +32,9 @@ export class AppComponent {
       description,
       done: false
     });
+  }
+
+  remove(item: Item):void{
+    this.allItems.splice(this.allItems.indexOf(item), 1);
   }
 }

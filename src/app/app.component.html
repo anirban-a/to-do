@@ -9,7 +9,30 @@
         id="addItemInput"
         type="text"/>
     <button class="btn-primary" (click)="addItem(newItem.value)">Add</button>
-    <ul>
-        <li *ngFor="let item of items">{{item.description}}</li>
-    </ul>
+    <div class="btn-wrapper">
+        <button
+            [class.active]="filter == 'all'"
+            (click)="filter = 'all'"
+            class="btn btn-menu">All</button>
+        
+        <button 
+            [class.active]="filter == 'active'" 
+            (click)="filter = 'active'"
+            class="btn btn-menu">To Do</button>
+        <button 
+            (click)="filter = 'done'"
+            [class.active] = "filter == 'done'"
+            class="btn btn-menu">Done</button>
+    </div>
+    <h2>
+        <!-- This will show as "1 item" or "4 items"-->
+        {{items.length}} <span *ngIf="items.length === 1; else elseBlock">item</span>
+        <ng-template #elseBlock>items</ng-template>
+
+        <ul>
+            <li *ngFor="let i of items">
+                <app-item (remove)="remove(i)" [item]="i"></app-item>
+            </li>
+        </ul>
+    </h2>
 </div>
